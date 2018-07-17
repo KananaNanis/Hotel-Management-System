@@ -1,0 +1,5 @@
+2 foodOrders made!!
+0 rooms booked!!
+ Food ordered : Ugali, 15.0  
+ Food ordered : Mukimo, 23.34  
+

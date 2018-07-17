@@ -1,0 +1,128 @@
+
+import java.util.List;
+import java.util.LinkedList;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Claire Chemutai
+ * @author Nanis Kanana
+ * @param <T>
+ */
+public final class OrgStructure<T> {
+    protected TreeNode<T> root;
+    
+    public static class TreeNode<T> {
+        private final T data;
+        private final List< TreeNode<T> > children;
+    
+    
+    public TreeNode(T d){
+            data = d;
+            children = new LinkedList<  >();
+        }    
+    public void addChild(TreeNode<T> node) {
+            children.add(node);
+        }
+                
+        // removes all the children of this node.
+        public void clearChildren() {
+            children.clear();
+        }
+    }
+    // constructor to create an empty tree
+  public OrgStructure() {
+        root = null;
+    }
+    
+    // constructor to create a tree with only a root node
+    public OrgStructure(T rootData) {
+        root = new TreeNode<>(rootData);
+    }
+    public OrgStructure(T rootData, OrgStructure<T>... subTrees) {
+        root = new TreeNode<>(rootData);
+        addSubTrees(subTrees);
+    }
+    
+    public void addSubTrees(OrgStructure<T>... subTrees) {
+        if (subTrees.length > 0) {
+            for (OrgStructure<T> subTree : subTrees) {
+                if (subTree != null) {
+                    root.addChild(subTree.root);
+                }
+            }
+        }
+    }
+    
+    public void setSubTrees(OrgStructure<T>... subTrees) {
+        root.clearChildren();
+        addSubTrees(subTrees);
+    }
+    
+    // A method to draw a tree with appropriate indentation
+    public void drawTree() {
+        if (root != null)
+             drawSubTree(root, 0); // call the recursive helper method
+        else
+            System.out.println("The tree is empty"); 
+    }
+    
+    private void drawSubTree(TreeNode<T> curNode, int indentLevel){
+        // The base case is that curNode is null, in which case we
+        // don't want to do anything.  We only do something if curNode is
+        // not null;
+        if (curNode != null) {
+            for (int i=0; i<indentLevel; i++)
+                System.out.print("\t");
+            System.out.println(curNode.data + " ");
+            
+            List< TreeNode<T> > children = curNode.children;
+            children.forEach((child) -> {
+                // The recursive call makes progress towards the base case 
+                // (curNode being null) by calling the method on the
+                // child of the current node.
+               drawSubTree(child,indentLevel+1);
+            });
+        }
+        
+    }
+    
+    
+    // A private recursive method to count the nodes in a subtree
+    // rooted at a given node
+    
+
+    // A method to count the nodes in a tree
+        
+    // A private recursive method to count the leaves in a subtree
+    // rooted at a given node
+        
+    public void printPreOrderTraversal() {
+         printPreOrderTraversal(root);
+        System.out.println(".");
+    }
+    
+    public void printPreOrderTraversal(TreeNode<T> stRoot) {
+        if (stRoot != null) {
+            System.out.print(stRoot.data);
+            stRoot.children.stream().map((child) -> {
+                System.out.print(", ");
+                return child;
+            }).forEachOrdered((child) -> {
+                printPreOrderTraversal(child);
+            });
+        }
+        
+    }
+  
+    }
+  
+  
+     
+    
+
